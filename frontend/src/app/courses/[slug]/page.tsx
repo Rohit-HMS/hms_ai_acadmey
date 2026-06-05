@@ -1,4 +1,5 @@
 'use client'
+// Trigger clean production Vercel build after saving environment variables
 
 import React, { useState, useEffect } from 'react'
 import { useParams, notFound } from 'next/navigation'
