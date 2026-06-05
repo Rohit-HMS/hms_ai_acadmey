@@ -22,6 +22,12 @@ export default buildConfig({
   admin: {
     user: Users.slug,
     bundler: webpackBundler(),
+    webpack: (config) => {
+      if (config.optimization) {
+        config.optimization.minimize = false;
+      }
+      return config;
+    },
     livePreview: {
       url: ({ data, documentInfo }) => {
         const collection = documentInfo?.collection;
