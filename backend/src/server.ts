@@ -100,7 +100,15 @@ app.use((req, res, next) => {
 
 // Redirect root request to Payload Admin Panel
 app.get('/', (_, res) => {
-  res.redirect('/admin');
+  res.redirect('/admin/');
+});
+
+// Fallback for admin routes to avoid 404/CSP errors in production
+app.get('/admin*', (req, res, next) => {
+  if (req.path.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/)) {
+    return next();
+  }
+  res.sendFile(path.resolve(__dirname, '../build/index.html'));
 });
 
 const start = async () => {
