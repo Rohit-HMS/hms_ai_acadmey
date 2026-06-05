@@ -617,6 +617,7 @@ function CourseDetailContent({ fetchedCourse }: { fetchedCourse: CourseDetail })
 
   useEffect(() => {
     console.log("CourseDetailContent rendered with initialData:", fetchedCourse)
+    console.log("NEXT_PUBLIC_CMS_API_URL evaluated in browser:", process.env.NEXT_PUBLIC_CMS_API_URL)
     const handleMsg = (event: MessageEvent) => {
       console.log("IFRAME MESSAGE RECEIVED:", event.origin, event.data)
     }
