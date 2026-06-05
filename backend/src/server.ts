@@ -45,7 +45,7 @@ async function populateMediaFields(obj: any, payloadInstance: any): Promise<any>
 // Add custom CORS headers middleware to allow Payload's live-preview preflight requests
 app.use((req, res, next) => {
   const allowedOrigins = [
-    process.env.FRONTEND_URL || 'http://localhost:3000',
+    process.env.PAYLOAD_PUBLIC_FRONTEND_URL || process.env.FRONTEND_URL || 'http://localhost:3000',
     'http://localhost:3000',
     'http://localhost:3001',
     'http://localhost:3002',

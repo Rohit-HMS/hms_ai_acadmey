@@ -54,7 +54,7 @@ export default buildConfig({
     livePreview: {
       url: ({ data, documentInfo }) => {
         const collection = documentInfo?.collection;
-        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+        const frontendUrl = process.env.PAYLOAD_PUBLIC_FRONTEND_URL || process.env.FRONTEND_URL || 'http://localhost:3000';
         if (collection?.slug === 'courses') {
           return `${frontendUrl}/courses/${data.slug}`;
         }
@@ -86,14 +86,14 @@ export default buildConfig({
     schemaOutputFile: path.resolve(__dirname, 'generated-schema.graphql'),
   },
   cors: [
-    process.env.FRONTEND_URL || 'http://localhost:3000',
+    process.env.PAYLOAD_PUBLIC_FRONTEND_URL || process.env.FRONTEND_URL || 'http://localhost:3000',
     'http://localhost:3000',
     'http://localhost:3001',
     'http://localhost:3002',
     'http://localhost:3003',
   ],
   csrf: [
-    process.env.FRONTEND_URL || 'http://localhost:3000',
+    process.env.PAYLOAD_PUBLIC_FRONTEND_URL || process.env.FRONTEND_URL || 'http://localhost:3000',
     'http://localhost:3000',
     'http://localhost:3001',
     'http://localhost:3002',
