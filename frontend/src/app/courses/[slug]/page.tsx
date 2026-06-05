@@ -641,6 +641,7 @@ function CourseDetailContent({ fetchedCourse }: { fetchedCourse: CourseDetail })
     initialData: fetchedCourse,
     serverURL: process.env.NEXT_PUBLIC_CMS_API_URL || 'http://localhost:3005',
     depth: 2,
+    apiRoute: '/api/courses',
   })
 
   useEffect(() => {
