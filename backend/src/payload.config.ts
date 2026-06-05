@@ -25,6 +25,9 @@ export default buildConfig({
     webpack: (config) => {
       if (config.optimization) {
         config.optimization.minimize = false;
+        config.optimization.usedExports = false;
+        config.optimization.sideEffects = false;
+        config.optimization.concatenateModules = false;
       }
       
       const wp = eval('require')('webpack');
