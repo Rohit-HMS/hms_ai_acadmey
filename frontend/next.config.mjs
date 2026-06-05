@@ -1,3 +1,5 @@
+console.log("BUILD TIME BACKEND URL:", process.env.NEXT_PUBLIC_CMS_API_URL);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
