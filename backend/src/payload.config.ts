@@ -26,14 +26,26 @@ export default buildConfig({
       if (config.optimization) {
         config.optimization.minimize = false;
       }
-      if (config.resolve && config.resolve.alias) {
-        try {
-          const extractTranslationsPath = require.resolve('payload/dist/translations/extractTranslations');
-          (config.resolve.alias as any)[extractTranslationsPath] = path.resolve(__dirname, './extractTranslationsMock.js');
-        } catch (err) {
-          console.warn('Could not resolve extractTranslations path for aliasing:', err);
-        }
+      
+      const webpack = require('webpack');
+      if (!config.plugins) {
+        config.plugins = [];
       }
+      
+      config.plugins.push(
+        new webpack.NormalModuleReplacementPlugin(
+          /payload\/dist\/errors\/APIError/,
+          path.resolve(__dirname, './APIErrorMock.js')
+        )
+      );
+      
+      config.plugins.push(
+        new webpack.NormalModuleReplacementPlugin(
+          /payload\/dist\/translations\/extractTranslations/,
+          path.resolve(__dirname, './extractTranslationsMock.js')
+        )
+      );
+      
       return config;
     },
     livePreview: {
