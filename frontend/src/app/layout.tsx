@@ -46,8 +46,8 @@ export default function RootLayout({
                         if (collectionSlug) {
                           var proxiedData = new Proxy(event.data, {
                             get: function(target, prop) {
-                              if (prop === 'collectionSlug') return collectionSlug;
-                              if (prop === '_processed') return true;
+                               if (prop === 'collectionSlug' || prop === 'collection') return collectionSlug;
+                               if (prop === '_processed') return true;
                               var val = target[prop];
                               if (typeof val === 'function') {
                                 return val.bind(target);
