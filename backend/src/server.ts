@@ -109,7 +109,13 @@ if (process.env.NODE_ENV === 'production') {
     if (req.path.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/)) {
       return next();
     }
-    res.sendFile(path.resolve(__dirname, '../build/index.html'));
+    const indexPath = path.resolve(process.cwd(), './build/index.html');
+    res.sendFile(indexPath, (err) => {
+      if (err) {
+        console.error('Error sending index.html:', err);
+        next(err);
+      }
+    });
   });
 }
 

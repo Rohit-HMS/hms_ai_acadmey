@@ -27,20 +27,20 @@ export default buildConfig({
         config.optimization.minimize = false;
       }
       
-      const webpack = require('webpack');
+      const wp = eval('require')('webpack');
       if (!config.plugins) {
         config.plugins = [];
       }
       
       config.plugins.push(
-        new webpack.NormalModuleReplacementPlugin(
+        new wp.NormalModuleReplacementPlugin(
           /payload\/dist\/errors\/APIError/,
           path.resolve(__dirname, './APIErrorMock.js')
         )
       );
       
       config.plugins.push(
-        new webpack.NormalModuleReplacementPlugin(
+        new wp.NormalModuleReplacementPlugin(
           /payload\/dist\/translations\/extractTranslations/,
           path.resolve(__dirname, './extractTranslationsMock.js')
         )
