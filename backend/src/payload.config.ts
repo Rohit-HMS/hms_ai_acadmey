@@ -26,6 +26,14 @@ export default buildConfig({
       if (config.optimization) {
         config.optimization.minimize = false;
       }
+      if (config.resolve && config.resolve.alias) {
+        try {
+          const extractTranslationsPath = require.resolve('payload/dist/translations/extractTranslations');
+          (config.resolve.alias as any)[extractTranslationsPath] = path.resolve(__dirname, './extractTranslationsMock.js');
+        } catch (err) {
+          console.warn('Could not resolve extractTranslations path for aliasing:', err);
+        }
+      }
       return config;
     },
     livePreview: {
