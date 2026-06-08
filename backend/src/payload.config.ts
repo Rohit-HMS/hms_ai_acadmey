@@ -14,6 +14,7 @@ import Courses from './collections/Courses';
 import Mentors from './collections/Mentors';
 import Testimonials from './collections/Testimonials';
 import Media from './collections/Media';
+import Inquiries from './collections/Inquiries';
 import Footer from './globals/Footer';
 import Hero from './globals/Hero';
 
@@ -82,6 +83,7 @@ export default buildConfig({
     Mentors,
     Testimonials,
     Media,
+    Inquiries,
   ],
   globals: [
     Footer,

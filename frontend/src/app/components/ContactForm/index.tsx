@@ -29,28 +29,35 @@ const ContactForm = () => {
     }))
   }
   const reset = () => {
-    formData.firstname = ''
-    formData.lastname = ''
-    formData.email = ''
-    formData.phnumber = ''
-    formData.Message = ''
+    setFormData({
+      firstname: '',
+      lastname: '',
+      email: '',
+      phnumber: '',
+      Message: '',
+    })
   }
   const handleSubmit = async (e: any) => {
     e.preventDefault()
     setLoader(true)
 
-    fetch('https://formsubmit.co/ajax/bhainirav772@gmail.com', {
+    fetch('/api/contact', {
       method: 'POST',
-      headers: { 'Content-type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        Name: formData.firstname,
-        LastName: formData.lastname,
-        Email: formData.email,
-        PhoneNo: formData.phnumber,
-        Message: formData.Message,
+        firstName: formData.firstname,
+        lastName: formData.lastname,
+        email: formData.email,
+        phone: formData.phnumber,
+        message: formData.Message,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to submit form')
+        }
+        return response.json()
+      })
       .then((data) => {
         if (data.success) {
           setSubmitted(true)
@@ -61,12 +68,11 @@ const ContactForm = () => {
             setShowThanks(false)
           }, 5000)
         }
-
-        reset()
+        setLoader(false)
       })
       .catch((error) => {
         setLoader(false)
-        console.log(error.message)
+        console.error('Submission error:', error.message)
       })
   }
   return (
