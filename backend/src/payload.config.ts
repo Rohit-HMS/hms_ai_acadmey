@@ -101,6 +101,7 @@ export default buildConfig({
     'http://localhost:3001',
     'http://localhost:3002',
     'http://localhost:3003',
+    'https://hms-ai-acadmey.vercel.app',
   ],
   csrf: [
     process.env.PAYLOAD_PUBLIC_FRONTEND_URL || process.env.FRONTEND_URL || 'http://localhost:3000',
@@ -108,6 +109,7 @@ export default buildConfig({
     'http://localhost:3001',
     'http://localhost:3002',
     'http://localhost:3003',
+    'https://hms-ai-acadmey.vercel.app',
   ],
   // Trigger config reload
 });

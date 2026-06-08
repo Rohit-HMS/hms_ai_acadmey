@@ -49,7 +49,8 @@ app.use((req, res, next) => {
     'http://localhost:3000',
     'http://localhost:3001',
     'http://localhost:3002',
-    'http://localhost:3003'
+    'http://localhost:3003',
+    'https://hms-ai-acadmey.vercel.app'
   ];
   const origin = req.headers.origin;
   const isLocalhost = origin && /^http:\/\/localhost:\d+$/.test(origin);
