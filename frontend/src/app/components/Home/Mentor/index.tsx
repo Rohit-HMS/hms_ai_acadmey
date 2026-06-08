@@ -8,9 +8,9 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { MentorType } from '@/app/types/mentor'
 import MentorSkeleton from '../../Skeleton/Mentor'
-import { resolveUploadOrURL } from '@/utils/resolveUploadOrURL'
+import { resolveUploadOrURL, getDynamicCmsUrl } from '@/utils/resolveUploadOrURL'
 
-const serverUrlForPreview = process.env.NEXT_PUBLIC_CMS_API_URL || 'http://localhost:3005';
+const serverUrlForPreview = getDynamicCmsUrl();
 
 const Mentor = () => {
   const [mentor, setMentor] = useState<MentorType[]>([])

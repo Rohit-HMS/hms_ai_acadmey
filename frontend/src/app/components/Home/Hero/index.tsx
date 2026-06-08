@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { Icon } from '@iconify/react/dist/iconify.js'
+import { getDynamicCmsUrl } from '@/utils/resolveUploadOrURL'
 
 interface HeroData {
   tagline?: string
@@ -18,7 +19,7 @@ const Hero = () => {
   useEffect(() => {
     const fetchHero = async () => {
       try {
-        const server = process.env.NEXT_PUBLIC_CMS_API_URL || 'http://localhost:3005'
+        const server = getDynamicCmsUrl()
         const res = await fetch(`${server}/api/globals/hero`)
         if (!res.ok) throw new Error('Failed to fetch hero global')
         const data = await res.json()

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Logo from '../Header/Logo'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { FooterLinkType } from '@/app/types/footerlink'
+import { getDynamicCmsUrl } from '@/utils/resolveUploadOrURL'
 
 const Footer = () => {
   const [footerlink, SetFooterlink] = useState<FooterLinkType[]>([])
@@ -27,7 +28,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchFooter = async () => {
       try {
-        const server = process.env.NEXT_PUBLIC_CMS_API_URL || 'http://localhost:3005'
+        const server = getDynamicCmsUrl()
         const res = await fetch(`${server}/api/globals/footer?t=${Date.now()}`, { cache: 'no-store' })
         if (!res.ok) throw new Error('Failed to fetch footer global')
         const data = await res.json()

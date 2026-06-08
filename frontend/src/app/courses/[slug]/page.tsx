@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Breadcrumb from '@/app/components/Breadcrumb'
 import { CourseDetail } from '@/data/courses'
 import { useLivePreview } from '@payloadcms/live-preview-react'
-import { resolveUploadOrURL } from '@/utils/resolveUploadOrURL'
+import { resolveUploadOrURL, getDynamicCmsUrl } from '@/utils/resolveUploadOrURL'
 
 const MotionDiv = motion.div as any;
 
@@ -67,7 +67,7 @@ if (typeof window !== 'undefined') {
   });
 }
 
-const serverUrlForPreview = process.env.NEXT_PUBLIC_CMS_API_URL || 'http://localhost:3005';
+const serverUrlForPreview = getDynamicCmsUrl();
 
 function formatCourse(c: any): CourseDetail | null {
   if (!c) return null
@@ -641,7 +641,7 @@ function CourseDetailContent({ fetchedCourse }: { fetchedCourse: CourseDetail })
 
   const { data: liveCourse } = useLivePreview<any>({
     initialData: fetchedCourse,
-    serverURL: process.env.NEXT_PUBLIC_CMS_API_URL || 'http://localhost:3005',
+    serverURL: serverUrlForPreview,
     depth: 2,
     apiRoute: '/api/courses',
   })
