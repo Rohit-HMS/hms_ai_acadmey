@@ -19,7 +19,7 @@ const Mentor = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/api/data')
+        const res = await fetch(`/api/data?t=${Date.now()}`, { cache: 'no-store' })
         if (!res.ok) throw new Error('Failed to fetch')
         const data = await res.json()
         setMentor(data.MentorData)
@@ -39,8 +39,11 @@ const Mentor = () => {
         if (updatedDoc && 'name' in updatedDoc && 'profession' in updatedDoc && 'imgSrc' in updatedDoc && !('comment' in updatedDoc) && !('about' in updatedDoc)) {
           setMentor((prevMentors) => {
             return prevMentors.map((m) => {
-              if (m.name === updatedDoc.name || m.name === updatedDoc._originalName || m.name.includes(updatedDoc.name) || updatedDoc.name.includes(m.name)) {
+              const matchesId = m.id && updatedDoc.id && (m.id === updatedDoc.id || m.id === updatedDoc._id);
+              const matchesName = m.name === updatedDoc.name || m.name === updatedDoc._originalName || m.name.includes(updatedDoc.name) || updatedDoc.name.includes(m.name);
+              if (matchesId || (!m.id && matchesName)) {
                 return {
+                  id: updatedDoc.id || updatedDoc._id || m.id,
                   name: updatedDoc.name,
                   profession: updatedDoc.profession,
                   imgSrc: resolveUploadOrURL(updatedDoc.imgSrc, serverUrlForPreview),

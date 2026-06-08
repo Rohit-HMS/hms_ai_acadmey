@@ -55,10 +55,11 @@ export const GET = async () => {
 
   try {
     // Fetch Mentors
-    const mentorRes = await fetch(`${cmsUrl}/api/mentors?limit=100`, { cache: 'no-store' })
+    const mentorRes = await fetch(`${cmsUrl}/api/mentors?limit=100&t=${Date.now()}`, { cache: 'no-store' })
     if (mentorRes.ok) {
       const data = await mentorRes.json()
       MentorData = data.docs.map((doc: any) => ({
+        id: doc.id || doc._id,
         name: doc.name,
         profession: doc.profession,
         imgSrc: resolveUploadOrURL(doc.imgSrc, cmsUrl),
@@ -71,10 +72,11 @@ export const GET = async () => {
 
   try {
     // Fetch Testimonials
-    const testimonialRes = await fetch(`${cmsUrl}/api/testimonials?limit=100`, { cache: 'no-store' })
+    const testimonialRes = await fetch(`${cmsUrl}/api/testimonials?limit=100&t=${Date.now()}`, { cache: 'no-store' })
     if (testimonialRes.ok) {
       const data = await testimonialRes.json()
       TestimonialData = data.docs.map((doc: any) => ({
+        id: doc.id || doc._id,
         name: doc.name,
         profession: doc.profession,
         comment: doc.comment,
@@ -88,7 +90,7 @@ export const GET = async () => {
 
   try {
     // Fetch Courses for any component reading it from /api/data
-    const courseRes = await fetch(`${cmsUrl}/api/courses?limit=100`, { cache: 'no-store' })
+    const courseRes = await fetch(`${cmsUrl}/api/courses?limit=100&t=${Date.now()}`, { cache: 'no-store' })
     if (courseRes.ok) {
       const data = await courseRes.json()
       CourseData = data.docs.map((doc: any) => ({

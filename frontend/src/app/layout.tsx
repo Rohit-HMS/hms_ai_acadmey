@@ -24,6 +24,25 @@ export default function RootLayout({
             __html: `
               (function() {
                 if (typeof window === 'undefined') return;
+
+                // Complete Payload Live Preview handshake after page loads to prevent webpack race conditions
+                var parentWin = window.opener || window.parent;
+                if (parentWin && parentWin !== window) {
+                  var sendHandshake = function() {
+                    parentWin.postMessage({
+                      type: 'payload-live-preview',
+                      ready: true
+                    }, '*');
+                  };
+                  if (document.readyState === 'complete') {
+                    setTimeout(sendHandshake, 250);
+                  } else {
+                    window.addEventListener('load', function() {
+                      setTimeout(sendHandshake, 250);
+                    });
+                  }
+                }
+
                 var originalAdd = window.addEventListener;
                 window.addEventListener = function(type, listener, options) {
                   if (type === 'message' && typeof listener === 'function') {
@@ -44,28 +63,13 @@ export default function RootLayout({
                           }
                         }
                         if (collectionSlug) {
-                          var proxiedData = new Proxy(event.data, {
-                            get: function(target, prop) {
-                               if (prop === 'collectionSlug' || prop === 'collection') return collectionSlug;
-                               if (prop === '_processed') return true;
-                              var val = target[prop];
-                              if (typeof val === 'function') {
-                                return val.bind(target);
-                              }
-                              return val;
-                            }
-                          });
-                          var proxiedEvent = new Proxy(event, {
-                            get: function(target, prop) {
-                              if (prop === 'data') return proxiedData;
-                              var val = target[prop];
-                              if (typeof val === 'function') {
-                                return val.bind(target);
-                              }
-                              return val;
-                            }
-                          });
-                          return listener(proxiedEvent);
+                          try {
+                            event.data.collectionSlug = collectionSlug;
+                            event.data.collection = collectionSlug;
+                            event.data._processed = true;
+                          } catch (e) {
+                            // If event.data is frozen or not writable, fallback to wrapping it
+                          }
                         }
                       }
                       return listener(event);

@@ -44,7 +44,7 @@ const Courses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch('/api/courses')
+        const res = await fetch(`/api/courses?t=${Date.now()}`, { cache: 'no-store' })
         if (!res.ok) throw new Error('Failed to fetch courses')
         const data = await res.json()
         setCourses(data)

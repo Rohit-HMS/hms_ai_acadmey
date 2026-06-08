@@ -13,7 +13,7 @@ const Footer = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/api/data')
+        const res = await fetch(`/api/data?t=${Date.now()}`, { cache: 'no-store' })
         if (!res.ok) throw new Error('Failed to fetch')
         const data = await res.json()
         SetFooterlink(data.FooterLinkData)
@@ -28,7 +28,7 @@ const Footer = () => {
     const fetchFooter = async () => {
       try {
         const server = process.env.NEXT_PUBLIC_CMS_API_URL || 'http://localhost:3005'
-        const res = await fetch(`${server}/api/globals/footer`)
+        const res = await fetch(`${server}/api/globals/footer?t=${Date.now()}`, { cache: 'no-store' })
         if (!res.ok) throw new Error('Failed to fetch footer global')
         const data = await res.json()
         setFooterData(data)

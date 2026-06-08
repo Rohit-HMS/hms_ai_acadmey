@@ -54,7 +54,15 @@ export default buildConfig({
     livePreview: {
       url: ({ data, documentInfo }) => {
         const collection = documentInfo?.collection;
-        const frontendUrl = process.env.PAYLOAD_PUBLIC_FRONTEND_URL || process.env.FRONTEND_URL || 'http://localhost:3000';
+        let frontendUrl = process.env.PAYLOAD_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
+
+        if (typeof window !== 'undefined') {
+          const hostname = window.location.hostname;
+          if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+            frontendUrl = 'https://hms-ai-acadmey.vercel.app';
+          }
+        }
+
         if (collection?.slug === 'courses') {
           return `${frontendUrl}/courses/${data.slug}`;
         }

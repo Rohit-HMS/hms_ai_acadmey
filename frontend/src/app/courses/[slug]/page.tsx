@@ -572,7 +572,7 @@ export default function CourseDetailPage() {
     if (!slug) return
     const fetchCourse = async () => {
       try {
-        const res = await fetch(`/api/courses?slug=${slug}`)
+        const res = await fetch(`/api/courses?slug=${slug}&t=${Date.now()}`, { cache: 'no-store' })
         if (res.status === 404) {
           setNotFoundState(true)
           return

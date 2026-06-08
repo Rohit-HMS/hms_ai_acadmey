@@ -19,7 +19,7 @@ const Testimonial = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/api/data')
+        const res = await fetch(`/api/data?t=${Date.now()}`, { cache: 'no-store' })
         if (!res.ok) throw new Error('Failed to fetch.')
         const data = await res.json()
         setTestimonial(data.TestimonialData)
@@ -39,8 +39,11 @@ const Testimonial = () => {
         if (updatedDoc && 'name' in updatedDoc && 'comment' in updatedDoc && 'rating' in updatedDoc) {
           setTestimonial((prevTestimonials) => {
             return prevTestimonials.map((t) => {
-              if (t.name === updatedDoc.name || t.name === updatedDoc._originalName || t.name.includes(updatedDoc.name) || updatedDoc.name.includes(t.name)) {
+              const matchesId = t.id && updatedDoc.id && (t.id === updatedDoc.id || t.id === updatedDoc._id);
+              const matchesName = t.name === updatedDoc.name || t.name === updatedDoc._originalName || t.name.includes(updatedDoc.name) || updatedDoc.name.includes(t.name);
+              if (matchesId || (!t.id && matchesName)) {
                 return {
+                  id: updatedDoc.id || updatedDoc._id || t.id,
                   name: updatedDoc.name,
                   profession: updatedDoc.profession,
                   comment: updatedDoc.comment,

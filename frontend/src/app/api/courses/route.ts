@@ -9,7 +9,7 @@ export const GET = async (req: NextRequest) => {
   try {
     if (slug) {
       // Fetch single course details by slug
-      const res = await fetch(`${cmsUrl}/api/courses?where[slug][equals]=${slug}`, { cache: 'no-store' })
+      const res = await fetch(`${cmsUrl}/api/courses?where[slug][equals]=${slug}&t=${Date.now()}`, { cache: 'no-store' })
       if (!res.ok) {
         return NextResponse.json({ error: 'Failed to fetch course from CMS' }, { status: res.status })
       }
@@ -51,7 +51,7 @@ export const GET = async (req: NextRequest) => {
       return NextResponse.json(mappedCourse)
     } else {
       // Fetch all courses
-      const res = await fetch(`${cmsUrl}/api/courses?limit=100`, { cache: 'no-store' })
+      const res = await fetch(`${cmsUrl}/api/courses?limit=100&t=${Date.now()}`, { cache: 'no-store' })
       if (!res.ok) {
         return NextResponse.json({ error: 'Failed to fetch courses from CMS' }, { status: res.status })
       }
