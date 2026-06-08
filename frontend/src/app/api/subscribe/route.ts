@@ -8,6 +8,7 @@ export const dynamic = 'force-dynamic'
 export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json()
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://hms-ai-acadmey.vercel.app'
 
     if (!email || !email.includes('@')) {
       return NextResponse.json({ error: 'Invalid email address.' }, { status: 400 })
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
       from: process.env.SMTP_FROM || '"HMS AI Academy" <noreply@hmsacademy.com>',
       to: email,
       subject: 'Welcome to HMS AI Academy & Your Course Brochure',
-      text: `Hello,\n\nThank you for subscribing to our newsletter! Please find the HMS AI Academy course brochure attached to this email.\n\nExplore our courses at http://localhost:3000\n\nBest regards,\nHMS AI Academy Team`,
+      text: `Hello,\n\nThank you for subscribing to our newsletter! Please find the HMS AI Academy course brochure attached to this email.\n\nExplore our courses at ${siteUrl}\n\nBest regards,\nHMS AI Academy Team`,
       html: `
         <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f6faff; padding: 40px 20px; line-height: 1.6; color: #222c44;">
           <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(26, 33, 188, 0.05); border: 1px solid #e1e8f5;">
@@ -99,7 +100,7 @@ export async function POST(req: NextRequest) {
 
               <!-- Call to Action -->
               <div style="text-align: center; margin-bottom: 35px; margin-top: 30px;">
-                <a href="http://localhost:3000" style="background-color: #1a21bc; color: #ffffff; text-decoration: none; padding: 14px 28px; font-size: 16px; font-weight: 700; border-radius: 9999px; display: inline-block; box-shadow: 0 4px 10px rgba(26, 33, 188, 0.25);">
+                <a href="${siteUrl}" style="background-color: #1a21bc; color: #ffffff; text-decoration: none; padding: 14px 28px; font-size: 16px; font-weight: 700; border-radius: 9999px; display: inline-block; box-shadow: 0 4px 10px rgba(26, 33, 188, 0.25);">
                   Explore Courses
                 </a>
               </div>
