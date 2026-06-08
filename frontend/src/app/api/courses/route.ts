@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+export const dynamic = 'force-dynamic'
 import { resolveUploadOrURL } from '@/utils/resolveUploadOrURL'
 
 export const GET = async (req: NextRequest) => {
@@ -48,7 +49,11 @@ export const GET = async (req: NextRequest) => {
         })) : [],
       }
 
-      return NextResponse.json(mappedCourse)
+      return NextResponse.json(mappedCourse, {
+        headers: {
+          'Cache-Control': 'no-store, max-age=0, must-revalidate',
+        }
+      })
     } else {
       // Fetch all courses
       const res = await fetch(`${cmsUrl}/api/courses?limit=100&t=${Date.now()}`, { cache: 'no-store' })
@@ -84,7 +89,11 @@ export const GET = async (req: NextRequest) => {
         })) : [],
       }))
 
-      return NextResponse.json(mappedCourses)
+      return NextResponse.json(mappedCourses, {
+        headers: {
+          'Cache-Control': 'no-store, max-age=0, must-revalidate',
+        }
+      })
     }
   } catch (error) {
     console.error('Error in proxy route /api/courses:', error)

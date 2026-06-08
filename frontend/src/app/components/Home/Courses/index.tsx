@@ -9,7 +9,7 @@ import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { CourseDetail } from '@/data/courses'
 import CourseSkeleton from '../../Skeleton/Course'
-import { resolveUploadOrURL, getDynamicCmsUrl } from '@/utils/resolveUploadOrURL'
+import { resolveUploadOrURL } from '@/utils/resolveUploadOrURL'
 
 const NextArrow = (props: any) => {
   const { onClick } = props
@@ -35,7 +35,7 @@ const PrevArrow = (props: any) => {
   )
 }
 
-const serverUrlForPreview = getDynamicCmsUrl();
+const serverUrlForPreview = process.env.NEXT_PUBLIC_CMS_API_URL || 'http://localhost:3005';
 
 const Courses = () => {
   const [courses, setCourses] = useState<CourseDetail[]>([])

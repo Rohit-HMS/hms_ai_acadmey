@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+export const dynamic = 'force-dynamic'
 import { MentorType } from '@/app/types/mentor'
 import { TestimonialType } from '@/app/types/testimonial'
 import { CourseType } from '@/app/types/course'
@@ -116,5 +117,9 @@ export const GET = async () => {
     MentorData,
     TestimonialData,
     FooterLinkData,
+  }, {
+    headers: {
+      'Cache-Control': 'no-store, max-age=0, must-revalidate',
+    }
   })
 }
