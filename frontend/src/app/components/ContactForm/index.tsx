@@ -168,21 +168,27 @@ const ContactForm = () => {
                 <button
                   type='submit'
                   disabled={!isFormValid || loader}
-                  className={`border leading-none px-6 text-lg font-medium py-4 rounded-full 
+                  className={`border leading-none px-6 text-lg font-medium py-4 rounded-full flex items-center justify-center gap-2
                     ${
                       !isFormValid || loader
                         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                         : 'bg-primary border-primary text-white hover:bg-transparent hover:text-primary cursor-pointer'
                     }`}>
-                  Submit
+                  {loader ? (
+                    <>
+                      <span>Submitting...</span>
+                      <div className='w-4 h-4 rounded-full animate-spin border-2 border-solid border-current border-t-transparent'></div>
+                    </>
+                  ) : (
+                    'Submit'
+                  )}
                 </button>
               </div>
             </form>
           </div>
           {showThanks && (
-            <div className='text-white bg-primary rounded-full px-4 text-lg mb-4.5 mt-1 absolute flex items-center gap-2'>
-              Thank you for contacting us! We will get back to you soon.
-              <div className='w-3 h-3 rounded-full animate-spin border-2 border-solid border-white border-t-transparent'></div>
+            <div className='text-white bg-primary rounded-full px-5 py-2.5 text-lg mb-4.5 mt-2 absolute flex items-center gap-2 shadow-md'>
+              <span>Thank you for contacting us! We will get back to you soon.</span>
             </div>
           )}
         </div>
